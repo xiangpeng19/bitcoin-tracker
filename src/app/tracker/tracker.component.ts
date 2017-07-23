@@ -5,7 +5,7 @@ import { TrackerService } from './services/tracker.service';
 
 
 @Component({
-    selector: 'tracker',
+    selector: 'app-tracker',
     templateUrl: './tracker.component.html',
     styleUrls: ['./tracker.component.css']
 })
