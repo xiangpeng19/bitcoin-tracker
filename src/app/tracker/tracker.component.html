@@ -1,3 +1,19 @@
-<p>
-  tracker works!
-</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Currency</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let price of prices; index as i">
+            <th scope="row">{{i}}</th>
+            <td>{{price.timestamp}}</td>
+            <td>{{price.amount}}</td>
+            <td>{{price.currency}}</td>
+        </tr>
+
+    </tbody>
+</table>
