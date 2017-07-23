@@ -1,1 +1,8 @@
+<md-toolbar color="primary">
+    <span>Bitcoin Price Tracker</span>
+    <span class="spacer"></span>
+    <md-select>
+        <md-option *ngFor="let currency of currencies" [value]="currency.id">{{ currency.id }}</md-option>
+    </md-select>
+</md-toolbar>
 <app-tracker></app-tracker>

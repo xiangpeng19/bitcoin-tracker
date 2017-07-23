@@ -1,13 +1,12 @@
-import { Price } from './../models/Price';
+import { Currency } from './../models/Currency';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
+import { Price } from '../models/Price';
 
 @Injectable()
-export class TrackerService {
+export class CoinbaseService {
 
     private endpoint = 'https://api.coinbase.com/';
     private apiVersion = 'v2';
@@ -16,10 +15,16 @@ export class TrackerService {
 
     }
 
-    public getPrice(currencyPair: string, type: string) {
+    public getPrice(currencyPair: string, type: string): Observable<Price> {
         const url = this.endpoint + this.apiVersion + '/prices/' + currencyPair + '/' + type;
         return this.http.get(url)
             .map(response => Price.fromJson(response.json().data));
     }
 
+    public getCurrenies(): Observable<Currency[]> {
+        const url = this.endpoint + this.apiVersion + '/currencies';
+        return this.http.get(url)
+            .map(response => response.json().data
+                .map(currency => Currency.fromJson(currency)) );
+    }
 }

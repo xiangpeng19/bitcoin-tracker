@@ -1,5 +1,5 @@
 import { SideBarComponent } from './side-bar/side-bar.component';
-import { TrackerService } from './tracker/services/tracker.service';
+import { CoinbaseService } from './services/coinbase.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -13,7 +13,7 @@ import 'hammerjs';
   declarations: [
     AppComponent,
     TrackerComponent,
-    SideBarComponent
+    SideBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +22,7 @@ import 'hammerjs';
     MaterialModule
   ],
   providers: [
-    TrackerService,
+    CoinbaseService,
   ],
   bootstrap: [AppComponent]
 })
