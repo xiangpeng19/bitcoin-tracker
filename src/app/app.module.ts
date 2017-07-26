@@ -8,6 +8,7 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import 'hammerjs';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [
     CoinbaseService,

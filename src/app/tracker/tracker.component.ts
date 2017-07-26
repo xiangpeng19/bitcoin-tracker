@@ -1,8 +1,9 @@
 import { CoinbaseService } from './../services/coinbase.service';
 import { Observable } from 'rxjs/Observable';
 import { Price } from '../models/Price';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { Currency } from '../models/Currency';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-tracker',
@@ -12,18 +13,23 @@ import { Component, OnInit } from '@angular/core';
 export class TrackerComponent implements OnInit {
 
     private prices: Price[];
+    private currencies: Currency[];
 
-    constructor(private coinBaseService: CoinbaseService) {
+    private selectedCurrency: Currency;
+    private subscription: Subscription;
+
+    constructor(private coinbaseService: CoinbaseService) {
         this.prices = [];
+        this.currencies = [];
+        this.subscription = new Subscription();
     }
 
     ngOnInit() {
-        Observable.timer(0, 3000).subscribe(t => {
-            this.coinBaseService.getPrice('BTC-USD', 'spot')
-                .subscribe(newPrice => {
-                    this.getPrices(newPrice);
-                });
-        });
+        this.subscribe('USD');
+        this.coinbaseService.getCurrenies()
+            .subscribe(currencies => {
+                this.currencies = currencies;
+            });
     }
 
     private getPrices(newPrice) {
@@ -31,6 +37,21 @@ export class TrackerComponent implements OnInit {
             this.prices.shift();
         }
         this.prices.push(newPrice);
+    }
+
+    private subscribe(currency: string) {
+        const currencyPair = 'BTC-' + currency;
+        this.subscription = (Observable.timer(0, 3000).subscribe(t => {
+            this.coinbaseService.getPrice(currencyPair, 'spot')
+                .subscribe(newPrice => {
+                    this.getPrices(newPrice);
+                });
+        }));
+    }
+
+    public onCurrencyChange() {
+        this.subscription.unsubscribe();
+        this.subscribe(this.selectedCurrency.id);
     }
 
 }
